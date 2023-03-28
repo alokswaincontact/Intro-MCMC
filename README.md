@@ -1,17 +1,15 @@
-# Introduction
+## Introduction
 
-This code is originally from John Clements titled *Intro to Markov Chain Monte Carlo*
+This code is originally from John Clements titled _Intro to Markov Chain Monte Carlo_.
 It was not working and the code was divided in a piecemeal fashion across
-multiple files. I decided to fix it and made it work.
+multiple files. I fixed the issues and made it work.
 
 
 ## Usage example
 
-OS X & Linux:
-
 ```sh
 (py38) ~/Intro-MCMC$ python main.py 
-100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50000/50000 [00:52<00:00, 951.27it/s]
+100%|████████████████████████████████████| 50000/50000 [00:52<00:00, 951.27it/s]
                            Logit Regression Results                           
 ==============================================================================
 Dep. Variable:              chocolate   No. Observations:                   85
@@ -32,16 +30,17 @@ pricepercent     4.3104      1.024      4.209      0.000       2.303       6.318
 
 ## Development setup
 
+Use _Python 3.8_
+
 ```sh
 pip install -r requirements.txt
 ```
 
-
 ## Reference
 
-- Intro to Markov Chain Monte Carlo
-  MCMC Explained and Applied to Logistic Regression
+- Intro to Markov Chain Monte Carlo 
+  MCMC Explained and Applied to Logistic Regression 
   https://towardsdatascience.com/intro-to-markov-chain-monte-carlo-c6f217e00345
 
-- The Ultimate Halloween Candy Power Ranking
+- The Ultimate Halloween Candy Power Ranking 
   https://www.kaggle.com/datasets/fivethirtyeight/the-ultimate-halloween-candy-power-ranking
