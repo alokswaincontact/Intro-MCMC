@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+
+from mcmc_demo0 import *
 
 # load in field goal data
 all_data = pd.read_csv('candy-data.csv')

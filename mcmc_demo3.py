@@ -1,5 +1,9 @@
 from statsmodels.discrete.discrete_model import Logit
 
+from mcmc_demo0 import *
+from mcmc_demo1 import *
+from mcmc_demo2 import *
+
 # add an intercept since statsmodels does not
 my_data['Intercept'] = 1
 

@@ -1,3 +1,8 @@
+import matplotlib.pyplot as plt
+
+from mcmc_demo0 import *
+from mcmc_demo1 import *
+
 plt.figure(figsize=(12, 5), dpi= 80, facecolor='w', edgecolor='k')
 
 plt.subplot(1, 2, 1)
@@ -50,4 +55,4 @@ plt.hlines(xmin=x_[0], xmax=x_[-1], y=boundary, color='g', linestyle='dashed', l
 plt.title('Price Percentile vs. Probability of Being Chocolate', fontsize=15)
 plt.xlabel('Price Percentile', fontsize=15)
 plt.ylabel('Probability of Being Chocolate', fontsize=15)
-plt.show;
+plt.show();

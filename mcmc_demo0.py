@@ -1,6 +1,9 @@
+import numpy as np
+from scipy.stats import norm
+from scipy.stats import mode
+from tqdm import tqdm
+
 class mcmc_logistic_reg:
-    
-    import numpy as np
     
     def __init__self(self):
         self.raw_beta_distr = np.empty(1)
@@ -21,8 +24,6 @@ class mcmc_logistic_reg:
         # A function to calculate the log prior using a normal prior. The
         # log prior is used to avoid underflow.
         ###
-        from scipy.stats import norm
-        import numpy as np
         
         return np.sum(norm.logpdf(beta, loc=prior_means.reshape((-1, 1)), 
                                   scale=prior_stds.reshape((-1, 1)))) 
@@ -36,7 +37,7 @@ class mcmc_logistic_reg:
         return np.sum(y * np.log(self.inv_logit(beta.reshape((-1, 1)), X)) + 
                       (1-y)*np.log((1-self.inv_logit(beta.reshape((-1,1)),X))))
     
-    def log_posterior(self, y, X, beta, prior_means, prior_sds):
+    def log_posterior(self, y, X, beta, prior_means, prior_stds):
         ###
         # Defines a function to calculate the log posterior of the betas given 
         # the log likelihood and the log prior assuming it is a normal prior.
@@ -53,9 +54,6 @@ class mcmc_logistic_reg:
                                num_iter,
                                add_intercept,
                                random_seed):
-        
-        from scipy.stats import norm
-        from tqdm import tqdm
         
         # set a random seed
         np.random.seed(random_seed)
@@ -139,8 +137,7 @@ class mcmc_logistic_reg:
         # Returns the 100*(1-alpha)% credible interval for each coefficient in
         # a 2 by number of coefficients numpy array
         ###
-        from numpy import transpose, quantile
-        self.cred_ints =  transpose(quantile(self.beta_distr,
+        self.cred_ints =  np.transpose(np.quantile(self.beta_distr,
                                              q=(alpha/2, 1-alpha/2),
                                              axis=1))
     
@@ -150,13 +147,10 @@ class mcmc_logistic_reg:
         # the median, mean, or mode as an estimate of the beta vector
         ###
         
-        from numpy import median, mean
-        from scipy.stats import mode
-        
         if method == 'median':
-            beta_hat = median(self.beta_distr, axis=1).reshape((-1,1))
+            beta_hat = np.median(self.beta_distr, axis=1).reshape((-1,1))
         elif method == 'mean':
-            beta_hat = mean(self.beta_distr, axis=1).reshape((-1,1))
+            beta_hat = np.mean(self.beta_distr, axis=1).reshape((-1,1))
         else:
             beta_hat = mode(self.beta_distr, axis=1)[0]
         
@@ -167,7 +161,6 @@ class mcmc_logistic_reg:
         ###
         # Gives predictions, either in log-odds or probabilities (default)
         ###
-        from numpy import matmul
         
         # add an intercept column if desired
         if add_intercept:
@@ -180,7 +173,7 @@ class mcmc_logistic_reg:
             predictions = self.inv_logit(self.beta_hat, X_mod)
         # outputs predicted log-odds otherwise
         else:
-            predictions = matmul(X_mod, self.beta_hat)
+            predictions = np.matmul(X_mod, self.beta_hat)
             
         # returns predictions
         return predictions
@@ -191,10 +184,9 @@ class mcmc_logistic_reg:
         # boundary for probability. If predicted probability > boundary, it
         # belongs to class 1
         ###
-        from numpy import where
         # predict the probabilities
         preds = self.predict(X_new, add_intercept, prob=True)
         # set predictions to 1 or 0 based on boundary
-        pred_classes = where(preds > boundary, 1, 0)
+        pred_classes = np.where(preds > boundary, 1, 0)
         
         return pred_classes
